@@ -1,9 +1,6 @@
 package com.molina.demo.beans;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.beans.ConstructorProperties;
 
@@ -11,14 +8,15 @@ import java.beans.ConstructorProperties;
 @Table(name="Country")
 public class Country {
     @Id
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name="countryName")
     String countryName;
     @Column(name="countryCapital")
     String countryCapital;
 
 
-    public Country(int id, String countryName, String countryCapital) {
+    public Country(Long id, String countryName, String countryCapital) {
         this.id = id;
         this.countryName = countryName;
         this.countryCapital = countryCapital;
@@ -28,11 +26,11 @@ public class Country {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

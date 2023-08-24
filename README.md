@@ -57,3 +57,16 @@ que mapea la llave primaria
 - created(URI location): Crea un objeto ResponseEntity con un estado HTTP 201 Created y una cabecera Location que apunta a la ubicación del nuevo recurso creado.
 - headers(HttpHeaders headers): Crea un objeto ResponseEntity con los encabezados HTTP especificados y sin contenido adicional.
 
+# Mockito and JUnit 5
+- Es un framework que se usa para simular objetos (mocks) para hacer pruebas unitarias
+- Los mocks permiten simular el comportamiento de componentes dependientes en pruevas unitarias.
+@InjectMocks
+Se usa para inyectar el serivio (capa logica) que se desa probar.
+@Mock
+se utiliza para crear un mock del repositorio la dependecia externa.
+
+metodo when()
+se utiliza para configurar el comportamiento de los mocks.
+verify() 
+se utiliza para asegurarse de que ciertos métodos se llamen según lo esperado en tus pruebas unitarias,
+lo que te permite verificar la interacción entre objetos simulados y el código que estás probando.
