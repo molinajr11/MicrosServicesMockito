@@ -3,8 +3,9 @@ package com.molina.demo.controllers;
 import com.molina.demo.beans.Country;
 import com.molina.demo.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.util.List;
 
@@ -21,8 +22,14 @@ CountryService countryService;
     }
 
     @GetMapping("/countries/{id}")
-    public Country getCountriesById(@PathVariable int id){
-      return countryService.getCountrybyID(id);
+    public ResponseEntity getCountriesById(@PathVariable int id){
+      try{
+          Country country= countryService.getCountrybyID(id);
+          return new ResponseEntity<Country>(country, HttpStatus.OK);
+      } catch (Exception e){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+
     }
 
     @GetMapping("/getcountries/countryname")
@@ -36,17 +43,21 @@ CountryService countryService;
     }
 
     @PutMapping("/updatecountry")
-    public Country updateCountry(@RequestBody Country country){
-        return countryService.addCountry(country);
+    public ResponseEntity<Country> updateCountry(@PathVariable int id, @RequestBody Country country){
+       try{
+           Country idExist = countryService.getCountrybyID(id);
+           idExist.setCountryName(country.getCountryName());
+           idExist.setCountryCapital(country.getCountryCapital());
+          Country countryUpdated= countryService.updateCountry(idExist);
+           return  new ResponseEntity<Country>(countryUpdated,HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.CONFLICT);
+       }
+
     }
 
     @DeleteMapping("/deletecountry/{id}")
     public AddResponse deleteCountry(@PathVariable int id){
         return countryService.deleteCountry(id);
     }
-
-
-
-
-
 }
